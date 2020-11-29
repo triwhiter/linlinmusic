@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/person"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgc"
+    android:gravity="center_horizontal"
+    tools:context=".activity.MyCenterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:orientation="horizontal">
+
+            <cn.sjcup.musicplayer.image.RoundImageView
+                android:id="@+id/img_tx"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/boy"
+                app:type="circle" />
+
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:text="Account"
+                    android:textColor="@color/accout"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/level"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:text="level 1"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btn_my_center"
+                android:layout_width="20dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:scaleX="0.3"
+                android:scaleY="0.3"
+                android:src="@drawable/brow" />
+
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/grid_center"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginLeft="20dp"
+
+            android:layout_marginRight="20dp"
+            android:background="@drawable/card_shape"
+
+            android:columnCount="4"
+            android:rowCount="4">
+
+            <ImageView
+                android:id="@+id/image_1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/cen1" />
+
+
+
+            <ImageView
+                android:id="@+id/image_2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/cen2" />
+
+            <ImageView
+                android:id="@+id/image_3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/cen3" />
+
+            <ImageView
+                android:id="@+id/image_4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
+
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/cen4" />
+            <TextView
+                android:id="@+id/menu_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:text="菜单" />
+
+            <TextView
+                android:id="@+id/menu_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:text="搜索菜单" />
+            <TextView
+                android:id="@+id/menu_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:text="收藏" />
+            <TextView
+                android:id="@+id/menu_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:layout_marginLeft="12dp"
+                android:text="上传" />
+
+            <ImageView
+                android:id="@+id/image_5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+
+                android:src="@drawable/cen5" />
+
+            <ImageView
+                android:id="@+id/image_6"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+
+                android:src="@drawable/cen6" />
+
+            <ImageView
+                android:id="@+id/image_7"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+
+                android:src="@drawable/cen7" />
+
+            <ImageView
+                android:id="@+id/image_8"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+
+                android:src="@drawable/cen8" />
+            <TextView
+                android:id="@+id/menu_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:text="好友" />
+
+            <TextView
+                android:id="@+id/menu_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:text="我的动态" />
+            <TextView
+                android:id="@+id/menu_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:text="已购" />
+            <TextView
+                android:id="@+id/menu_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-25dp"
+                android:layout_marginLeft="12dp"
+                android:text="其他" />
+        </GridLayout>
+
+        <LinearLayout
+            android:id="@+id/my_love_musics"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/card_shape"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/love_adv"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/boy" />
+
+            <LinearLayout
+                android:layout_width="237dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="18dp"
+
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/love_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:text="我喜欢的音乐"
+                    android:textColor="@color/accout"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/love_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:text="歌曲共7首"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

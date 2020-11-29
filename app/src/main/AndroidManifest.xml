@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.sjcup.musicplayer">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="霖霖音乐"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.MusicListActivity"></activity>
+        <activity android:name=".activity.MyCenterActivity"/>
+        <activity android:name=".activity.MyInfoActivity"/>
+        <activity android:name=".activity.SideMenuActivity"/>
+        <activity android:name=".activity.ChangePwdActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.MainActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/AppTheme.Full"
+            tools:ignore="DuplicateActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+
+</manifest>

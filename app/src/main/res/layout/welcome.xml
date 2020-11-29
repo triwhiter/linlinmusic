@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:background="@drawable/start">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="霖霖音乐"
+        android:textColor="#E67FAC"
+        android:shadowColor="@color/colorPink"
+        android:shadowRadius="5"
+        android:shadowDx="10"
+        android:shadowDy="10"
+        android:textSize="60dp"/>
+    <Button
+        android:id="@+id/dl_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="登录"/>
+
+</LinearLayout>
