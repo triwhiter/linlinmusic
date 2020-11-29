@@ -1,12 +1,15 @@
 package cn.sjcup.musicplayer.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.sjcup.musicplayer.R;
+import cn.sjcup.musicplayer.SplashActivity;
 import cn.sjcup.musicplayer.entity.LocalMusicAdapter;
 import cn.sjcup.musicplayer.entity.LocalMusicBean;
 import cn.sjcup.musicplayer.image.RoundImageView;
@@ -43,6 +47,39 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         //创建适配器
         adapter = new LocalMusicAdapter(this, mDatas);
         musicRV.setAdapter(adapter);
+
+        @SuppressLint("WrongViewCast") DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            //当抽屉的位置发生变化时调用
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+            }
+            //当抽屉已经处于完全打开的状态时调用
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                Toast.makeText(MusicListActivity.this, "我真是一个小可爱！", Toast.LENGTH_SHORT).show();
+                RoundImageView roundImageView= findViewById(R.id.sb_avater);
+                roundImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view){
+                        //跳转到注册界面
+                        Intent intent=new Intent(MusicListActivity.this, MyCenterActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+            //当抽屉已经完全关闭状态时调用
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                Toast.makeText(MusicListActivity.this, "舒服，来首歌！", Toast.LENGTH_SHORT).show();
+            }
+            //抽屉滑动状态改变时调用
+            //状态值STATE_IDLE：闲置、STATE_DRAGGING：拖拽、STATE_SETTLING：固定的
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+            });
+
 
         //设置布局管理器
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
