@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FAE5E5">
+    android:background="#ffffff">
 
     <androidx.drawerlayout.widget.DrawerLayout
     android:layout_width="match_parent"

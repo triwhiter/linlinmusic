@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:padding="16dp"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:background="@drawable/background"
-    >
+    android:background="@drawable/bgpink5">
     <Button
         android:id="@+id/quit_btn"
         android:layout_gravity="left"
@@ -24,6 +23,7 @@
             android:layout_width="260dp"
             android:layout_height="260dp"
             android:id="@+id/siv_icon"
+            app:type="circle"
             android:src="@drawable/default_record_album"
             android:layout_centerInParent="true"/>
 
@@ -43,7 +43,7 @@
             android:layout_marginTop="8dp"
 
             android:textSize="26dp"
-            android:textColor="#FFFFFF"
+            android:textColor="#856EAE"
 
             android:text="歌名"
             />
@@ -57,7 +57,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/text_view_name"
             android:text="演唱者"
-            android:textColor="#FFFFFF"
+            android:textColor="#FF9E84CC"
 
             android:textSize="20dp" />
 
