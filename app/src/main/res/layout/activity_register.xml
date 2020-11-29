@@ -7,7 +7,7 @@
     android:id="@+id/activity_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/c"
+    android:background="@drawable/bgpink6"
     android:orientation="vertical">
     <include layout="@layout/main_title_bar"></include><!--引入标题栏-->
     <ImageView
@@ -15,7 +15,7 @@
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
-        android:src="@drawable/x"/>
+        android:src="@drawable/login_at"/>
     <!--三个编辑框-->
     <EditText
         android:id="@+id/et_user_name"
@@ -25,7 +25,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginTop="35dp"
-        android:background="@drawable/register_user_name_bg"
+        android:layout_marginBottom="30dp"
         android:drawableLeft="@drawable/user_name_icon"
         android:drawablePadding="10dp"
         android:gravity="center_vertical"
@@ -42,7 +42,7 @@
         android:layout_height="48dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
-        android:background="@drawable/register_psw_bg"
+        android:layout_marginBottom="30dp"
         android:drawableLeft="@drawable/psw_icon"
         android:drawablePadding="10dp"
         android:hint="请输入密码"
@@ -59,7 +59,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
-        android:background="@drawable/register_psw_again_bg"
+        android:layout_marginBottom="30dp"
         android:drawableLeft="@drawable/psw_icon"
         android:drawablePadding="10dp"
         android:hint="请再次输入密码"

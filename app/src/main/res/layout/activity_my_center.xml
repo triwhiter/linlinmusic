@@ -5,7 +5,7 @@
     android:id="@+id/person"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgc"
+    android:background="@drawable/bgpink6"
     android:gravity="center_horizontal"
     tools:context=".activity.MyCenterActivity">
 
