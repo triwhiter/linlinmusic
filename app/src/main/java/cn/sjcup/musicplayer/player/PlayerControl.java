@@ -27,4 +27,6 @@ public interface PlayerControl {
     设置播放进度
      */
     void seekTo(int seek);
+
+    void playById(String mid);
 }

@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -23,15 +26,26 @@ import cn.sjcup.musicplayer.SplashActivity;
 import cn.sjcup.musicplayer.entity.LocalMusicAdapter;
 import cn.sjcup.musicplayer.entity.LocalMusicBean;
 import cn.sjcup.musicplayer.image.RoundImageView;
+import cn.sjcup.musicplayer.player.PlayerControl;
+import cn.sjcup.musicplayer.player.PlayerPresenter;
 import cn.sjcup.musicplayer.servlet.RequestServlet;
 
 public class MusicListActivity extends AppCompatActivity implements View.OnClickListener{
+
+    ImageView nextTv, playTv, lastTv;
+    TextView singerTv, songTv;
+    MediaPlayer mediaPlayer;
+
 
     RecyclerView musicRV;
     LocalMusicAdapter adapter;
     //数据源
     List<LocalMusicBean> mDatas;
+    //记录当前播放音乐的位置
+    int currentPlayPosition = -1;
 
+    //音乐控件
+    private PlayerControl playerControl = new PlayerPresenter(new MainActivity());
 
 
     @Override
@@ -41,7 +55,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
 
         initView(); //初始化界面
 
-
+        mediaPlayer = new MediaPlayer();
         mDatas = new ArrayList<>();
 
         //创建适配器
@@ -91,6 +105,32 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        //设置点击事件
+        setEventListener();
+    }
+
+    private void setEventListener() {
+        // 设置每一项的点击事件
+        adapter.setOnItemClinkListener(new LocalMusicAdapter.OnItemClinkListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                currentPlayPosition = position;
+                LocalMusicBean musicBean = mDatas.get(position);
+
+/*                //设置底部
+                singerTv.setText(musicBean.getSinger());
+                songTv.setText(musicBean.getSong());*/
+
+                //停止播放
+                playerControl.stopPlay();
+                //重置播放器
+
+                //播放音乐
+                playerControl.playById(musicBean.getId());
+            }
+        });
+
     }
 
     private void loadLocalMusicData() throws JSONException {

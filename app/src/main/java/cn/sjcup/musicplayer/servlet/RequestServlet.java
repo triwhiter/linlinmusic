@@ -11,12 +11,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RequestServlet {
-
-    private static final String LOGIN_SERVLET = "http://10.0.2.2:8080/musicplayer/login";
-    private static final String REGISTER_SERVLET ="http://10.0.2.2:8080/musicplayer/SignUp";
-    private static final String CHANGEPWD_SERVLET ="http://10.0.2.2:8080/musicplayer/UpdatePwd";
-    private static final String SAVE_USER_INFO ="http://10.0.2.2:8080/musicplayer/SaveMusic";
-    private static final String GET_MUSIC_LIST = "http://10.0.2.2:8080/musicplayer/GetMusicList";
+    private static final  String URL = "http://10.0.2.2:8080/musicplayer";
+//    private static final  String URL = "http://192.168.23.1:8080/musicplayer";
+    private static final String LOGIN_SERVLET = URL + "/login";
+    private static final String REGISTER_SERVLET =URL + "/SignUp";
+    private static final String CHANGEPWD_SERVLET =URL + "/UpdatePwd";
+    private static final String SAVE_USER_INFO =URL + "/SaveMusic";
+    private static final String GET_MUSIC_LIST = URL + "/GetMusicList";
+    public static final String IMG = URL + "/image/";
+    public static final String ADDRESS = URL + "/music/";
     private static HttpURLConnection conn;
     private static JSONObject JSONobj;
     public static JSONArray MusicList;

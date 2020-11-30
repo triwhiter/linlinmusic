@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     public int musicId;   //歌曲id
     public int playPattern;  //播放模式
     public String playAddress;  //音乐文件地址
-    public static final String IMG = "http://10.0.2.2:8080/musicplayer/image/";    //音乐图片的通用地址
+    public String IMG = RequestServlet.IMG;    //音乐图片的通用地址
     private boolean isUserTouchProgressBar = false;   //判断手是否触摸进度条的状态
     private Intent musicIntent;
     private PlayerConnection mPlayerConnection;
@@ -64,6 +64,7 @@ public class MainActivity extends Activity {
 
     //public PlayerViewControl mPlayerViewControl = ViewControl;
     private PlayerControl mPlayerControl = new PlayerPresenter(this);
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -102,13 +103,13 @@ public class MainActivity extends Activity {
         playPattern = userData.optInt("pattern");
     }
 
-    //初始化服务
+/*    //初始化服务
     private void initService(){
         musicIntent = new Intent(this, PlayerService.class);
         startService(musicIntent);
 
         initBindService();   //绑定服务
-    }
+    }*/
 
     private void initBindService() {
         //Log.d(Tag, "initBindService --> ");
@@ -123,16 +124,11 @@ public class MainActivity extends Activity {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            //Log.d(Tag, "onServiceConnected "+service);
-            //mplayerControl
             mPlayerControl = (PlayerPresenter) service;
-            //mplayerControl
-            //playerControl.registerViewController(playerViewControl);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            //Log.d(Tag, "onServiceDisconnected ");
             mPlayerControl=null;
         }
     }
@@ -321,7 +317,7 @@ public class MainActivity extends Activity {
         getMusicListThread();
     }
 
-    public enum IsPlay{
+    public static enum IsPlay{
         play, notPlay
     }
 
@@ -333,9 +329,12 @@ public class MainActivity extends Activity {
             String author = musicInfo.optString("author");
             String img = musicInfo.optString("img");
             playAddress=musicInfo.optString("address");
-            mMusicPic.setImageUrl(IMG+img,R.mipmap.ic_launcher,R.mipmap.ic_launcher);
-            mMusicName.setText(name);
-            mMusicArtist.setText(author);
+            //if (mMusicPic != null)
+                 mMusicPic.setImageUrl(IMG+img,R.mipmap.ic_launcher,R.mipmap.ic_launcher);
+           // if(mMusicName != null)
+                mMusicName.setText(name);
+           // if (mMusicArtist != null)
+                mMusicArtist.setText(author);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -385,6 +384,5 @@ public class MainActivity extends Activity {
 
     private void stop() {
         mPlayerControl.stopPlay();
-        //stopService(musicIntent);
     }
 }
