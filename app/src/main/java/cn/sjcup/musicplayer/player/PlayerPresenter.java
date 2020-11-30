@@ -7,12 +7,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.sjcup.musicplayer.activity.MainActivity;
+import cn.sjcup.musicplayer.servlet.RequestServlet;
 
 public class PlayerPresenter implements PlayerControl {
 
     private MediaPlayer mMediaPlayer = null;
 
-    private static final String ADDRESS = "http://10.0.2.2:8080/musicplayer/music/";
+    private String ADDRESS = RequestServlet.ADDRESS;
     private PlayerViewControl mViewController = null;
     private MainActivity mMainActivity = null;
 

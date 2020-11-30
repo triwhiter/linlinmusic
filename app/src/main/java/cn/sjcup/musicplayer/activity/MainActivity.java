@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     public int musicId;   //歌曲id
     public int playPattern;  //播放模式
     public String playAddress;  //音乐文件地址
-    public static final String IMG = "http://10.0.2.2:8080/musicplayer/image/";    //音乐图片的通用地址
+    public String IMG = RequestServlet.IMG;    //音乐图片的通用地址
     private boolean isUserTouchProgressBar = false;   //判断手是否触摸进度条的状态
     private Intent musicIntent;
     private PlayerConnection mPlayerConnection;
