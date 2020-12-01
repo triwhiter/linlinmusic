@@ -29,4 +29,7 @@ public interface PlayerControl {
     void seekTo(int seek);
 
     void playById(String mid);
+
+    //设置播放详情样式
+    void setView(String mid);
 }

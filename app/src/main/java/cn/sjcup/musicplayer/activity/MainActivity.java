@@ -33,23 +33,23 @@ public class MainActivity extends Activity {
     private String account;    //账户
     public int musicId;   //歌曲id
     public int playPattern;  //播放模式
-    public String playAddress;  //音乐文件地址
+    public static String playAddress;  //音乐文件地址
     public String IMG = RequestServlet.IMG;    //音乐图片的通用地址
     private boolean isUserTouchProgressBar = false;   //判断手是否触摸进度条的状态
     private Intent musicIntent;
     private PlayerConnection mPlayerConnection;
     public int songNum = 0;  //歌曲总数
 
-    private SeekBar mSeekBar;  //进度条
-    private Button mPlayOrPause;
-    private Button mPlayPattern;
-    private Button mPlayLast;
-    private Button mPlayNext;
-    private Button mPlayMenu;
-    private Button mQuit;
-    private TextView mMusicName;
-    private TextView mMusicArtist;
-    private SmartImageView mMusicPic;
+    private static SeekBar mSeekBar;  //进度条
+    private static Button mPlayOrPause;
+    private static Button mPlayPattern;
+    private static Button mPlayLast;
+    private static Button mPlayNext;
+    private static Button mPlayMenu;
+    private static Button mQuit;
+    private static TextView mMusicName;
+    private static TextView mMusicArtist;
+    private static SmartImageView mMusicPic;
 
     public final int PLAY_IN_ORDER = 0;   //顺序播放
     public final int PLAY_RANDOM = 1;    //随机播放
@@ -62,7 +62,6 @@ public class MainActivity extends Activity {
 
     public static JSONArray sMusicList;
 
-    //public PlayerViewControl mPlayerViewControl = ViewControl;
     private PlayerControl mPlayerControl = new PlayerPresenter(this);
 
 
@@ -319,6 +318,36 @@ public class MainActivity extends Activity {
 
     public static enum IsPlay{
         play, notPlay
+    }
+    //设置播放详情页面样式
+    public void setToMusicView(IsPlay playState, String mid) {
+        musicId = Integer.valueOf(mid).intValue() - 1;
+        try {
+            JSONObject musicInfo = RequestServlet.getMusicList().getJSONObject(musicId);
+            String name = musicInfo.optString("name");
+            String author = musicInfo.optString("author");
+            String img = musicInfo.optString("img");
+            playAddress=musicInfo.optString("address");
+            if (mMusicPic == null){
+                mMusicPic = this.findViewById(R.id.siv_icon);
+            }
+            mMusicPic.setImageUrl(IMG+img,R.mipmap.ic_launcher,R.mipmap.ic_launcher);
+            if(mMusicName == null){
+                mMusicName = (TextView) this.findViewById(R.id.text_view_name);
+            }
+            mMusicName.setText(name);
+            if (mMusicArtist == null){
+                mMusicArtist = (TextView) this.findViewById(R.id.text_view_artist);
+            }
+            mMusicArtist.setText(author);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //播放按钮
+        mPlayerViewControl.onPlayerStateChange(1);
+        //进度条
+
     }
 
     //设置有关歌曲的界面
