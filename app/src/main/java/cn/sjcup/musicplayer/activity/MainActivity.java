@@ -311,6 +311,8 @@ public class MainActivity extends Activity {
         } else if (playPattern==PLAY_SINGLE) {
             mPlayPattern.setBackgroundResource(R.drawable.danquxunhuan);
         }
+        Intent intent = getIntent();
+         musicId = Integer.parseInt(intent.getStringExtra("musicId"));
 
         //获取音乐列表
         getMusicListThread();
@@ -403,7 +405,7 @@ public class MainActivity extends Activity {
                     songNum = sMusicList.length();
 
                     //根据用户数据和歌曲列表初始化有关歌曲的界面
-                    setMusicView(IsPlay.notPlay);
+                    setToMusicView(IsPlay.notPlay, String.valueOf(musicId));
                 }
             }catch (Exception e) {
                 e.printStackTrace();
