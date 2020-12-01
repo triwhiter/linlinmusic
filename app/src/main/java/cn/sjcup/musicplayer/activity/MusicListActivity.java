@@ -6,12 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -38,16 +41,24 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
     public static JSONArray MusicList;
     public int songNum = 0;  //歌曲总数
 
+    ImageView nextTv, playTv, lastTv;
+    TextView singerTv, songTv;
+    MediaPlayer mediaPlayer;
+
+
     RecyclerView musicRV;
     LocalMusicAdapter adapter;
     //数据源
     List<LocalMusicBean> mDatas;
+    //记录当前播放音乐的位置
+    int currentPlayPosition = -1;
     private DrawerLayout mDrawerLayout;//侧边菜单视图
     private NavigationView mNavigationView;//侧边菜单项
     private MenuItem mPreMenuItem;
     //public PlayerViewControl mPlayerViewControl = ViewControl;
-    private PlayerControl mPlayerControl = new PlayerPresenter(new MainActivity());
 
+    //音乐控件
+    private PlayerControl playerControl = new PlayerPresenter(new MainActivity());
 
 
     @Override
@@ -59,7 +70,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         initView(); //初始化界面
         //获取音乐列表
         getMusicListThread();
-
+        mediaPlayer = new MediaPlayer();
         mDatas = new ArrayList<>();
 
         //创建适配器
@@ -73,44 +84,38 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         musicRV.setLayoutManager(layoutManager);
 
 
+
+        //设置点击事件
+        setEventListener();
+    }
+
+    private void setEventListener() {
+        // 设置每一项的点击事件
+        adapter.setOnItemClinkListener(new LocalMusicAdapter.OnItemClinkListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                currentPlayPosition = position;
+                LocalMusicBean musicBean = mDatas.get(position);
+
+/*                //设置底部
+                singerTv.setText(musicBean.getSinger());
+                songTv.setText(musicBean.getSong());*/
+
+                //停止播放
+                playerControl.stopPlay();
+                //重置播放器
+
+                //播放音乐
+                playerControl.playById(musicBean.getId());
+            }
+        });
+
     }
 
 
 
     private void loadLocalMusicData() throws JSONException {
-        //加载本地存储的音乐文件到集合当中
-        // 获取ContentResolver
-        //ContentResolver resolver = getContentResolver();
-        //获取本地音乐的存储地址
-        //Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        //查询
-        /*       Cursor cursor = resolver.query(null, null, null, null);
-        //遍历
-        int id = 0;
-        while(cursor.moveToNext()){
-            String song = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-            String singer = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-            String album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-            id++;
-            String sid = String.valueOf(id);
-            String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-            long duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
-            SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-            String time = sdf.format(new Date(duration));
-            //封装
-            LocalMusicBean bean = new LocalMusicBean(sid, song, singer, album, time, path);
-            mDatas.add(bean);
-        }*/
-/*        LocalMusicBean bean1 = new LocalMusicBean("1", "厚颜无耻", "小许", "厚颜无耻", "04:30", "path");
-        LocalMusicBean bean2 = new LocalMusicBean("2", "暗恋是一个人事情", "宿阳", "像少年一样飞驰", "04:00", "path");
-        LocalMusicBean bean3 = new LocalMusicBean("3", "像鱼", "庄严", "像鱼", "05:30", "path");
-        mDatas.add(bean1);
-        mDatas.add(bean2);
-        mDatas.add(bean3);*/
-
-
-//        JSONArray musicList = RequestServlet.MusicList;
-        System.out.println("??????????????????"+songNum);
+        
         for(int i = 0; i < songNum; i++){
             JSONObject music_json = MusicList.getJSONObject(i);
             String sid = music_json.getString("musicId");
@@ -285,7 +290,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
     };
 
     private void stop() {
-        mPlayerControl.stopPlay();
+        playerControl.stopPlay();
         //stopService(musicIntent);
     }
 

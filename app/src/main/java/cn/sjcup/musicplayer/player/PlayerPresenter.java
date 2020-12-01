@@ -2,20 +2,25 @@ package cn.sjcup.musicplayer.player;
 
 import android.media.MediaPlayer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.sjcup.musicplayer.activity.MainActivity;
+import cn.sjcup.musicplayer.activity.MusicListActivity;
 import cn.sjcup.musicplayer.servlet.RequestServlet;
 
 public class PlayerPresenter implements PlayerControl {
 
-    private MediaPlayer mMediaPlayer = null;
+    private static MediaPlayer mMediaPlayer = null;
 
     private String ADDRESS = RequestServlet.ADDRESS;
     private PlayerViewControl mViewController = null;
     private MainActivity mMainActivity = null;
+/*    private MusicListActivity mMusicListActivity = null;*/
 
     //播放状态
     public final int PLAY_STATE_PLAY=1;   //在播
@@ -39,7 +44,8 @@ public class PlayerPresenter implements PlayerControl {
 
         if (mCurrentState == PLAY_STATE_STOP || playState == MainActivity.IsPlay.play) {
             try {
-                mMediaPlayer = new MediaPlayer();
+                if (mMediaPlayer == null)
+                    mMediaPlayer = new MediaPlayer();
                 //指定播放路径
                 mMediaPlayer.setDataSource(ADDRESS + mMainActivity.playAddress);
                 //准备播放
@@ -143,6 +149,34 @@ public class PlayerPresenter implements PlayerControl {
             int tarSeek=(int)(seek*1f/100*mMediaPlayer.getDuration());
             mMediaPlayer.seekTo(tarSeek);
         }
+    }
+
+    @Override
+    public void playById(String mid) {
+        int id = Integer.valueOf(mid).intValue() - 1;
+        if (mMediaPlayer == null)
+            mMediaPlayer = new MediaPlayer();
+        //指定播放路径
+        try {
+            try {
+                mMediaPlayer.setDataSource(ADDRESS + RequestServlet.getMusicList().getJSONObject(id).getString("address"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //准备播放
+        mMediaPlayer.prepareAsync();
+        //播放
+        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mMediaPlayer.start();
+            }
+        });
+        mCurrentState = PLAY_STATE_PLAY;
+
     }
 
     private void startTimer() {
