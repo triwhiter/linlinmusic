@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.sjcup.musicplayer.R;
+import cn.sjcup.musicplayer.SplashActivity;
 import cn.sjcup.musicplayer.entity.LocalMusicAdapter;
 import cn.sjcup.musicplayer.entity.LocalMusicBean;
 import cn.sjcup.musicplayer.image.RoundImageView;
@@ -107,6 +108,10 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
 
                 //播放音乐
                 playerControl.playById(musicBean.getId());
+                //跳转到注册界面
+                Intent intent=new Intent(MusicListActivity.this, MainActivity.class);
+                startActivity(intent);
+
             }
         });
 
@@ -115,7 +120,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
 
 
     private void loadLocalMusicData() throws JSONException {
-        
+
         for(int i = 0; i < songNum; i++){
             JSONObject music_json = MusicList.getJSONObject(i);
             String sid = music_json.getString("musicId");

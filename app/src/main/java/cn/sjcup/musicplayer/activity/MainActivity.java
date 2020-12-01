@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initUserData();   //初始化用户信息
+//        initUserData();   //初始化用户信息
 
         initView(); //初始化界面
 
