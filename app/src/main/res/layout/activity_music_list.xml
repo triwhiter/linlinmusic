@@ -8,7 +8,7 @@
     <androidx.drawerlayout.widget.DrawerLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-        android:id="@+id/drawerLayout">
+        android:id="@+id/list_dra">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/local_music_rv"
@@ -17,6 +17,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/list_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"

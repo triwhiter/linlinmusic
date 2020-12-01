@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import cn.sjcup.musicplayer.activity.LoginActivity;
 import cn.sjcup.musicplayer.activity.RegisterActivity;
@@ -14,7 +15,7 @@ import cn.sjcup.musicplayer.activity.RegisterActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-    Button btn1;
+    LinearLayout wel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void initEvent(){
         //登录按钮
-        btn1.setOnClickListener(new View.OnClickListener() {
+        wel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 //跳转到注册界面
@@ -37,6 +38,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        btn1 = this.findViewById(R.id.dl_btn);
+        wel = this.findViewById(R.id.welcome);
     }
 }

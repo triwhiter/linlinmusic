@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/my_self"
-            android:title="首页"
+            android:title="个人中心"
             android:icon="@drawable/side_bar_home" />
         <item android:title="收藏"
             android:icon="@drawable/side_bar_like"/>
@@ -14,7 +14,9 @@
             android:icon="@drawable/side_bar_set"/>
         <item android:title="关于"
             android:icon="@drawable/side_bar_about"/>
-        <item android:title="分享"
+        <item
+            android:id="@+id/loginout"
+            android:title="退出"
             android:icon="@drawable/side_bar_share"/>
     </group>
 </menu>

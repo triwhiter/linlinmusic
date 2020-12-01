@@ -16,7 +16,7 @@
         <activity android:name=".activity.MusicListActivity"></activity>
         <activity android:name=".activity.MyCenterActivity"/>
         <activity android:name=".activity.MyInfoActivity"/>
-        <activity android:name=".activity.SideMenuActivity"/>
+        <activity android:name=".service.SideMenuActivity"/>
         <activity android:name=".activity.ChangePwdActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.LoginActivity"/>
