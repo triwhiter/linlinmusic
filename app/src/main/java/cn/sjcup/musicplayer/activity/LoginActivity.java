@@ -126,7 +126,7 @@ public class LoginActivity extends Activity {
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
 
                         //传递数据
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MusicListActivity.class);
                         intent.putExtra("result",result.toString());   //把用户信息传递到播放界面
 
                         //销毁登录界面

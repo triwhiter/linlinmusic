@@ -9,14 +9,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="霖霖音乐"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.MusicListActivity"></activity>
         <activity android:name=".activity.MyCenterActivity"/>
         <activity android:name=".activity.MyInfoActivity"/>
-        <activity android:name=".service.SideMenuActivity"/>
         <activity android:name=".activity.ChangePwdActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.LoginActivity"/>

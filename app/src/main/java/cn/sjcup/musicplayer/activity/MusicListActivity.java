@@ -35,6 +35,8 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
     private String account;    //账户
     public int musicId;   //歌曲id
     public int playPattern;  //播放模式
+    public static JSONArray MusicList;
+    public int songNum = 0;  //歌曲总数
 
     RecyclerView musicRV;
     LocalMusicAdapter adapter;
@@ -55,7 +57,8 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         initUserData();
 
         initView(); //初始化界面
-
+        //获取音乐列表
+        getMusicListThread();
 
         mDatas = new ArrayList<>();
 
@@ -69,12 +72,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         musicRV.setLayoutManager(layoutManager);
 
-        //加载本地数据源
-        try {
-            loadLocalMusicData();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
@@ -111,9 +109,10 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         mDatas.add(bean3);*/
 
 
-        JSONArray musicList = RequestServlet.MusicList;
-        for(int i = 0; i < musicList.length(); i++){
-            JSONObject music_json = musicList.getJSONObject(i);
+//        JSONArray musicList = RequestServlet.MusicList;
+        System.out.println("??????????????????"+songNum);
+        for(int i = 0; i < songNum; i++){
+            JSONObject music_json = MusicList.getJSONObject(i);
             String sid = music_json.getString("musicId");
             String name = music_json.getString("name");
             String album = music_json.getString("album");
@@ -239,6 +238,45 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
                     stop();
                     MusicListActivity.this.finish();
                     Toast.makeText(MusicListActivity.this, "已退出", Toast.LENGTH_SHORT).show();
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    //获取音乐列表
+    private void getMusicListThread(){
+        new Thread(){
+            @Override
+            public void run() {
+                try{
+                    JSONArray result = RequestServlet.getMusicList();
+                    Message msg = new Message();
+                    msg.what = 2;
+                    msg.obj = result;
+                    handler2.sendMessage(msg);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    private Handler handler2 = new Handler(){
+        public void handleMessage(android.os.Message msg) {
+            try {
+                if (msg.what == 2) {
+                    MusicList = (JSONArray) msg.obj;
+                    songNum = MusicList.length();
+                    System.out.println("smsmsmms"+songNum);
+
+                    //根据用户数据和歌曲列表初始化有关歌曲的界面
+//                    setMusicView(MainActivity.IsPlay.notPlay);
+                    //加载本地数据源
+                    loadLocalMusicData();
+
                 }
             }catch (Exception e) {
                 e.printStackTrace();
