@@ -108,6 +108,9 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
 
                 //播放音乐
                 playerControl.playById(musicBean.getId());
+                //设置播放详情页面样式
+                playerControl.setView(musicBean.getId());
+
                 //跳转到注册界面
                 Intent intent=new Intent(MusicListActivity.this, MainActivity.class);
                 startActivity(intent);

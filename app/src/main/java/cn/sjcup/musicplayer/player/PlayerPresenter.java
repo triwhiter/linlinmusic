@@ -27,10 +27,14 @@ public class PlayerPresenter implements PlayerControl {
     public final int PLAY_STATE_PAUSE=2;  //暂停
     public final int PLAY_STATE_STOP=3;   //未播
 
-    public int mCurrentState = PLAY_STATE_STOP;   //默认状态是停止播放
+    public static int mCurrentState = 3;   //默认状态是停止播放
 
     private Timer mTimer;
     private SeekTimeTask mTimeTask;
+
+    public void setmCurrentState(int mCurrentState) {
+        this.mCurrentState = mCurrentState;
+    }
 
     public PlayerPresenter(MainActivity activity){
         mMainActivity = activity;
@@ -176,7 +180,11 @@ public class PlayerPresenter implements PlayerControl {
             }
         });
         mCurrentState = PLAY_STATE_PLAY;
+    }
 
+    @Override
+    public void setView(String mid) {
+        mMainActivity.setToMusicView(MainActivity.IsPlay.play, mid);
     }
 
     private void startTimer() {
