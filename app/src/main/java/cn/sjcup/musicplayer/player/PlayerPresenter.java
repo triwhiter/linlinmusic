@@ -86,6 +86,51 @@ public class PlayerPresenter implements PlayerControl {
     }
 
     @Override
+    public void playOrPauselist(MusicListActivity.IsPlay playState) {
+        if(mViewController == null){
+            this.mViewController = mMainActivity.mPlayerViewControl;
+        }
+
+        if (mCurrentState == PLAY_STATE_STOP || playState == MusicListActivity.IsPlay.play) {
+            try {
+                if (mMediaPlayer == null)
+                    mMediaPlayer = new MediaPlayer();
+                //指定播放路径
+                mMediaPlayer.setDataSource(ADDRESS + mMainActivity.playAddress);
+                //准备播放
+                mMediaPlayer.prepareAsync();
+                //播放
+                mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mMediaPlayer.start();
+                    }
+                });
+                mCurrentState = PLAY_STATE_PLAY;
+                startTimer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (mCurrentState == PLAY_STATE_PLAY) {
+            //如果当前的状态为播放，那么就暂停
+            if (mMediaPlayer != null) {
+                mMediaPlayer.pause();
+                mCurrentState = PLAY_STATE_PAUSE;
+                stopTimer();
+            }
+        } else if (mCurrentState == PLAY_STATE_PAUSE) {
+            //如果当前的状态为暂停，那么继续播放
+            if (mMediaPlayer != null) {
+                mMediaPlayer.start();
+                mCurrentState = PLAY_STATE_PLAY;
+                startTimer();
+            }
+        }
+
+        mViewController.onPlayerStateChange(mCurrentState);
+    }
+
+    @Override
     public void playLast() {
         // 顺序播放
         if (mMainActivity.playPattern == mMainActivity.PLAY_IN_ORDER) {
@@ -179,6 +224,8 @@ public class PlayerPresenter implements PlayerControl {
                 mMediaPlayer.start();
             }
         });
+
+        startTimer();
         mCurrentState = PLAY_STATE_PLAY;
     }
 

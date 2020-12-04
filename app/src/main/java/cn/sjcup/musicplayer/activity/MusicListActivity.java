@@ -13,11 +13,14 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.loopj.android.image.SmartImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,18 +36,28 @@ import cn.sjcup.musicplayer.entity.LocalMusicBean;
 import cn.sjcup.musicplayer.image.RoundImageView;
 import cn.sjcup.musicplayer.player.PlayerControl;
 import cn.sjcup.musicplayer.player.PlayerPresenter;
+import cn.sjcup.musicplayer.player.PlayerViewControl;
 import cn.sjcup.musicplayer.servlet.RequestServlet;
 
 public class MusicListActivity extends AppCompatActivity implements View.OnClickListener{
     private String account;    //账户
-    public int musicId;   //歌曲id
+    public static int musicId=0;   //歌曲id
     public int playPattern;  //播放模式
     public static JSONArray MusicList;
     public int songNum = 0;  //歌曲总数
+    private static Button mPlayOrPause;
+    private static Button mPlayLast;
+    private static Button mPlayNext;
+    private static TextView mMusicName;
+    private static TextView mMusicArtist;
+    private static SmartImageView mMusicPic;
 
-    ImageView nextTv, playTv, lastTv;
-    TextView singerTv, songTv;
     MediaPlayer mediaPlayer;
+
+    //播放状态
+    public final int PLAY_STATE_PLAY=1;   //在播
+    public final int PLAY_STATE_PAUSE=2;  //暂停
+    public final int PLAY_STATE_STOP=3;   //未播
 
 
     RecyclerView musicRV;
@@ -60,6 +73,29 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
 
     //音乐控件
     private PlayerControl playerControl = new PlayerPresenter(new MainActivity());
+    public PlayerViewControl mPlayerViewControl = new PlayerViewControl() {
+        @Override
+        public void onPlayerStateChange(int state) {
+            //根据播放状态来修改UI
+            switch (state) {
+                case PLAY_STATE_PLAY:
+                    //播放中的话，我们要修改按钮显示为暂停
+                    mPlayOrPause.setBackgroundResource(R.drawable.bofangb);
+                    break;
+                case PLAY_STATE_PAUSE:
+                case PLAY_STATE_STOP:
+                    mPlayOrPause.setBackgroundResource(R.drawable.bofang);
+                    break;
+            }
+        }
+
+        @Override
+        public void onSeekChange(final int seek) {
+        }
+    };
+    public static enum IsPlay{
+        play, notPlay
+    }
 
 
     @Override
@@ -69,8 +105,8 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         initUserData();
 
         initView(); //初始化界面
-        //获取音乐列表
-        getMusicListThread();
+        initEvent(); //初始化事件
+
         mediaPlayer = new MediaPlayer();
         mDatas = new ArrayList<>();
 
@@ -90,6 +126,21 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         setEventListener();
     }
 
+    //初始化用户信息
+    private void initUserData(){
+        Intent intent = getIntent();
+
+        String userStr = intent.getStringExtra("result");
+        JSONObject userData = RequestServlet.getJSON(userStr);
+        if (userData != null){
+            account = userData.optString("account");
+            musicId = userData.optInt("music_id");
+            playPattern = userData.optInt("pattern");
+        }
+
+
+    }
+
     private void setEventListener() {
         // 设置每一项的点击事件
         adapter.setOnItemClinkListener(new LocalMusicAdapter.OnItemClinkListener() {
@@ -105,9 +156,20 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
                 //停止播放
                 playerControl.stopPlay();
                 //重置播放器
+                try {
+                    JSONObject musicInfo = RequestServlet.getMusicList().getJSONObject(musicId);
+                    String name = musicInfo.optString("name");
+                    String author = musicInfo.optString("author");
+                    String img = musicInfo.optString("img");
+                    mMusicPic.setImageUrl(RequestServlet.IMG+img,R.mipmap.ic_launcher,R.mipmap.ic_launcher);
+                    mMusicName.setText(name);
+                    mMusicArtist.setText(author);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                //播放音乐
-                playerControl.playById(musicBean.getId());
+
+
 
                 //跳转到注册界面
                 Intent intent=new Intent(MusicListActivity.this, MainActivity.class);
@@ -129,9 +191,10 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
             String sid = music_json.getString("musicId");
             String name = music_json.getString("name");
             String album = music_json.getString("album");
+            String picture = music_json.getString("img");
             String time = music_json.getString("duration");
             String author = music_json.getString("author");
-            mDatas.add(new LocalMusicBean(sid,name,author,album,time));
+            mDatas.add(new LocalMusicBean(sid,name,author,album,picture,time));
         }
         //数据变化，提示更新
         adapter.notifyDataSetChanged();
@@ -141,7 +204,72 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
 
     private void initView() {
         /*初始化控件的函数*/
-        musicRV = findViewById(R.id.local_music_rv);
+        musicRV = this.findViewById(R.id.local_music_rv);
+        mPlayOrPause = (Button) this.findViewById(R.id.play_or_pause_btn);
+        mPlayLast= (Button) this.findViewById(R.id.play_last_btn);
+        mPlayNext = (Button) this.findViewById(R.id.play_next_btn);
+        mMusicName = (TextView) this.findViewById(R.id.text_view_name1);
+        mMusicArtist = (TextView) this.findViewById(R.id.text_view_artist1);
+        mMusicPic = (SmartImageView) this.findViewById(R.id.siv_icon1);
+
+        Intent intent = getIntent();
+        if (intent.getStringExtra("musicIdback") != null){
+        musicId = Integer.parseInt(intent.getStringExtra("musicIdback"));
+            try {
+                JSONObject musicInfo = RequestServlet.getMusicList().getJSONObject(musicId);
+                String name = musicInfo.optString("name");
+                String author = musicInfo.optString("author");
+                String img = musicInfo.optString("img");
+                mMusicPic.setImageUrl(RequestServlet.IMG+img,R.mipmap.ic_launcher,R.mipmap.ic_launcher);
+                mMusicName.setText(name);
+                mMusicArtist.setText(author);
+                mPlayerViewControl.onPlayerStateChange(1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+        //获取音乐列表
+        getMusicListThread();
+    }
+
+    //初始化事件
+    private void initEvent(){
+
+        //播放/暂停按钮
+        mPlayOrPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(playerControl!=null){
+                    //mPlayerViewControl.onPlayerStateChange(2);
+                    playerControl.playOrPauselist(MusicListActivity.IsPlay.notPlay);
+                }
+            }
+        });
+
+        //播放上一首
+        mPlayLast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(playerControl!=null){
+                    playerControl.playLast();
+                }
+            }
+        });
+
+        //播放下一首
+        mPlayNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(playerControl!=null){
+                    playerControl.playNext();
+                }
+            }
+        });
+
+
     }
 
     private void initSideBarEvent() {
@@ -215,16 +343,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
             }
         });
     }
-    //初始化用户信息
-    private void initUserData(){
-        Intent intent = getIntent();
 
-        String userStr = intent.getStringExtra("result");
-        JSONObject userData = RequestServlet.getJSON(userStr);
-        account = userData.optString("account");
-        musicId = userData.optInt("music_id");
-        playPattern = userData.optInt("pattern");
-    }
 
     //保存数据到数据库里
     private void saveDataToDB(){

@@ -10,12 +10,25 @@
     android:layout_height="match_parent"
         android:id="@+id/list_dra">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/local_music_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="70dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/local_music_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+        <include layout="@layout/music_buttom"
+            android:layout_alignParentBottom="true"
+            android:layout_height="60dp"
+            android:layout_width="match_parent"></include>
+        </RelativeLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/list_nav"
         android:layout_width="match_parent"
@@ -25,4 +38,5 @@
         app:menu="@menu/nav_menu" />
         
     </androidx.drawerlayout.widget.DrawerLayout>
+
 </RelativeLayout>

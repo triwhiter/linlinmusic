@@ -1,17 +1,29 @@
 package cn.sjcup.musicplayer.entity;
 
+import com.loopj.android.image.SmartImageView;
+
 public class LocalMusicBean {
     private String id;
     private String song;
     private String singer;
     private String album;
+    private String picture;
     private String duration;
 
-    public LocalMusicBean(String id, String song, String singer, String album, String duration) {
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public LocalMusicBean(String id, String song, String singer, String album, String picture, String duration) {
         this.id = id;
         this.song = song;
         this.singer = singer;
         this.album = album;
+        this.picture = picture;
         this.duration = duration;
     }
 

@@ -186,6 +186,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,MusicListActivity.class);
+                intent.putExtra("musicIdback",String.valueOf(musicId));
                 startActivity(intent);
             }
         });
@@ -312,7 +313,9 @@ public class MainActivity extends Activity {
             mPlayPattern.setBackgroundResource(R.drawable.danquxunhuan);
         }
         Intent intent = getIntent();
-         musicId = Integer.parseInt(intent.getStringExtra("musicId"));
+        musicId = Integer.parseInt(intent.getStringExtra("musicId"));
+        //播放音乐
+        //mPlayerControl.playById(String.valueOf(musicId));
 
         //获取音乐列表
         getMusicListThread();
@@ -348,9 +351,15 @@ public class MainActivity extends Activity {
         }
 
         //播放按钮
-        mPlayerViewControl.onPlayerStateChange(1);
-        //进度条
-
+        //mPlayerViewControl.onPlayerStateChange(1);
+        mPlayerControl.playOrPause(IsPlay.notPlay);
+//        //进度条
+//        if(playState == IsPlay.play){
+//            if ( mPlayerControl != null) {
+//                mPlayerControl.stopPlay();
+//            }
+//            mPlayerControl.playOrPause(playState);
+//        }
     }
 
     //设置有关歌曲的界面
