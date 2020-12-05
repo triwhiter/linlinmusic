@@ -35,4 +35,7 @@ public interface PlayerControl {
 
     //设置播放详情样式
     void setView(String mid);
+
+    //获取播放状态
+    public boolean IsPlay(int play);
 }

@@ -32,8 +32,9 @@ public class PlayerPresenter implements PlayerControl {
     private Timer mTimer;
     private SeekTimeTask mTimeTask;
 
-    public void setmCurrentState(int mCurrentState) {
-        this.mCurrentState = mCurrentState;
+
+    public boolean IsPlay(int play) {
+        return play == mCurrentState;
     }
 
     public PlayerPresenter(MainActivity activity){

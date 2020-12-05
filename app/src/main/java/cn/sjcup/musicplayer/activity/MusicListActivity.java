@@ -270,6 +270,17 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         });
 
 
+        //返回
+        mMusicPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!playerControl.IsPlay(PLAY_STATE_STOP))
+                    finish();
+            }
+        });
+
+
+
     }
 
     private void initSideBarEvent() {
