@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
     private static TextView mMusicName;
     private static TextView mMusicArtist;
     private static SmartImageView mMusicPic;
+    private ImageButton mMenu;
 
     MediaPlayer mediaPlayer;
 
@@ -211,6 +213,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         mMusicName = (TextView) this.findViewById(R.id.text_view_name1);
         mMusicArtist = (TextView) this.findViewById(R.id.text_view_artist1);
         mMusicPic = (SmartImageView) this.findViewById(R.id.siv_icon1);
+        mMenu = this.findViewById(R.id.menu_button);
 
         Intent intent = getIntent();
         if (intent.getStringExtra("musicIdback") != null){
@@ -223,7 +226,13 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
                 mMusicPic.setImageUrl(RequestServlet.IMG+img,R.mipmap.ic_launcher,R.mipmap.ic_launcher);
                 mMusicName.setText(name);
                 mMusicArtist.setText(author);
-                mPlayerViewControl.onPlayerStateChange(1);
+                if(playerControl.IsPlay(PLAY_STATE_PLAY)){
+                    mPlayerViewControl.onPlayerStateChange(1);
+                }
+
+                else {
+                    mPlayerViewControl.onPlayerStateChange(2);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -243,8 +252,18 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 if(playerControl!=null){
-                    //mPlayerViewControl.onPlayerStateChange(2);
-                    playerControl.playOrPauselist(MusicListActivity.IsPlay.notPlay);
+
+                    if(playerControl.IsPlay(PLAY_STATE_PLAY)){
+
+                        playerControl.playOrPauselist();
+                        mPlayerViewControl.onPlayerStateChange(2);
+                    }
+
+                    else {
+
+                        playerControl.playOrPauselist();
+                        mPlayerViewControl.onPlayerStateChange(1);
+                    }
                 }
             }
         });
@@ -270,6 +289,16 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         });
 
 
+        mMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mDrawerLayout != null)
+//                    mDrawerLayout.openDrawer(true);
+            }
+        });
+
+
+
         //返回
         mMusicPic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,6 +307,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
                     finish();
             }
         });
+
 
 
 
@@ -335,6 +365,10 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
                     case R.id.my_self:
                         Intent intent1=new Intent(MusicListActivity.this,MyCenterActivity.class);
                         startActivity(intent1);
+                        break;
+                    case R.id.change_pw:
+                        Intent intent2=new Intent(MusicListActivity.this,ChangePwdActivity.class);
+                        startActivity(intent2);
                         break;
                     case R.id.loginout:
                         //退出按钮

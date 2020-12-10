@@ -24,7 +24,6 @@ public class LoginActivity extends Activity {
     private TextView mMainTitle;   //主标题
     private TextView mBack;   //返回
     private TextView mRegister;  //注册
-    private TextView mChangePwd;  //修改密码
     private Button mLogin;   //登录按钮
     private EditText mUserName;  //输入账户
     private EditText mPwd;   //输入密码
@@ -61,15 +60,6 @@ public class LoginActivity extends Activity {
             }
         });
 
-        //修改密码按钮
-        mChangePwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //跳转到修改密码界面
-                Intent intent = new Intent(LoginActivity.this, ChangePwdActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //登录按钮
         mLogin.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +138,6 @@ public class LoginActivity extends Activity {
         mMainTitle = this.findViewById(R.id.tv_main_title);
         mBack = this.findViewById(R.id.tv_back);
         mRegister = this.findViewById(R.id.tv_register);
-        mChangePwd = this.findViewById(R.id.tv_change_psw);
         mLogin = this.findViewById(R.id.btn_login);
         mUserName = this.findViewById(R.id.et_user_name);
         mPwd = this.findViewById(R.id.et_psw);

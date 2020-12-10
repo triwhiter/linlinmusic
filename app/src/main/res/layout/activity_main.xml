@@ -10,7 +10,7 @@
     <Button
         android:id="@+id/quit_btn"
         android:layout_gravity="left"
-        android:background="@drawable/kaiguan"
+        android:background="@drawable/go_back_selector"
         android:layout_width="25dp"
         android:layout_height="25dp"/>
     <RelativeLayout

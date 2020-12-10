@@ -10,7 +10,8 @@
             android:icon="@drawable/side_bar_home" />
         <item android:title="收藏"
             android:icon="@drawable/side_bar_like"/>
-        <item android:title="设置"
+        <item android:title="修改密码"
+            android:id="@+id/change_pw"
             android:icon="@drawable/side_bar_set"/>
         <item android:title="关于"
             android:icon="@drawable/side_bar_about"/>

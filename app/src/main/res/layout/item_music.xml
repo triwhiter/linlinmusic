@@ -9,7 +9,7 @@
     app:contentPadding="10dp"
     app:cardCornerRadius="10dp"
 
-    app:cardBackgroundColor="#FFDDE3">
+    app:cardBackgroundColor="#F6F3F3">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,6 +30,8 @@
             android:textStyle="bold"
             android:layout_toRightOf="@+id/item_local_music_num"
             android:singleLine="true"
+            android:textColor="#353535"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="20dp"/>
 
         <TextView
@@ -39,14 +41,14 @@
             android:text="许嵩"
             android:layout_below="@id/item_local_music_song"
             android:layout_alignLeft="@id/item_local_music_song"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:textSize="14sp"
-            android:textColor="#888" />
+            android:textColor="#888888" />
         <TextView
             android:id="@+id/item_local_music_line"
             android:layout_width="2dp"
             android:layout_height="18dp"
-            android:background="#888"
+            android:background="#888888"
             android:layout_toRightOf="@id/item_local_music_singer"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -59,7 +61,7 @@
             android:layout_toRightOf="@id/item_local_music_line"
             android:layout_alignTop="@id/item_local_music_singer"
             android:textSize="14sp"
-            android:textColor="#888"
+            android:textColor="#888888"
             android:ellipsize="end"
             android:singleLine="true"/>
         <TextView
@@ -70,6 +72,6 @@
             android:layout_alignParentRight="true"
             android:text="04:30"
             android:textSize="14sp"
-            android:textColor="#888"/>
+            android:textColor="#888888"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

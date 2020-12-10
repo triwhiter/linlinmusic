@@ -19,7 +19,9 @@ public class PlayerPresenter implements PlayerControl {
 
     private String ADDRESS = RequestServlet.ADDRESS;
     private PlayerViewControl mViewController = null;
+    private PlayerViewControl listViewController = null;
     private MainActivity mMainActivity = null;
+    private MusicListActivity musicListActivity =null;
 /*    private MusicListActivity mMusicListActivity = null;*/
 
     //播放状态
@@ -34,6 +36,10 @@ public class PlayerPresenter implements PlayerControl {
 
 
     public boolean IsPlay(int play) {
+        return play == mCurrentState;
+    }
+
+    public boolean IsPAUSE(int play) {
         return play == mCurrentState;
     }
 
@@ -87,32 +93,11 @@ public class PlayerPresenter implements PlayerControl {
     }
 
     @Override
-    public void playOrPauselist(MusicListActivity.IsPlay playState) {
+    public void playOrPauselist() {
         if(mViewController == null){
             this.mViewController = mMainActivity.mPlayerViewControl;
         }
-
-        if (mCurrentState == PLAY_STATE_STOP || playState == MusicListActivity.IsPlay.play) {
-            try {
-                if (mMediaPlayer == null)
-                    mMediaPlayer = new MediaPlayer();
-                //指定播放路径
-                mMediaPlayer.setDataSource(ADDRESS + mMainActivity.playAddress);
-                //准备播放
-                mMediaPlayer.prepareAsync();
-                //播放
-                mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mMediaPlayer.start();
-                    }
-                });
-                mCurrentState = PLAY_STATE_PLAY;
-                startTimer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (mCurrentState == PLAY_STATE_PLAY) {
+        if (mCurrentState == PLAY_STATE_PLAY) {
             //如果当前的状态为播放，那么就暂停
             if (mMediaPlayer != null) {
                 mMediaPlayer.pause();
@@ -130,6 +115,8 @@ public class PlayerPresenter implements PlayerControl {
 
         mViewController.onPlayerStateChange(mCurrentState);
     }
+
+
 
     @Override
     public void playLast() {

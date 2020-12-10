@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.MusicListActivity"></activity>
+        <activity
+            android:theme="@style/AppTheme.Full"
+            tools:ignore="DuplicateActivity"
+            android:name=".activity.MusicListActivity"></activity>
         <activity android:name=".activity.MyCenterActivity"/>
         <activity android:name=".activity.MyInfoActivity"/>
         <activity android:name=".activity.ChangePwdActivity" />

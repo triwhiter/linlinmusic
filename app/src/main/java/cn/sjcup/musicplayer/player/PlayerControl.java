@@ -9,7 +9,8 @@ public interface PlayerControl {
      */
     void playOrPause(MainActivity.IsPlay playState);
 
-    void playOrPauselist(MusicListActivity.IsPlay playState);
+    public void playOrPauselist();
+
 
     /*
     播放上一首
@@ -38,4 +39,6 @@ public interface PlayerControl {
 
     //获取播放状态
     public boolean IsPlay(int play);
+
+    public boolean IsPAUSE(int play);
 }
