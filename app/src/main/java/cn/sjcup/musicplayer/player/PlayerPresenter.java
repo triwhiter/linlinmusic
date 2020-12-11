@@ -123,8 +123,10 @@ public class PlayerPresenter implements PlayerControl {
         // 顺序播放
         if (mMainActivity.playPattern == mMainActivity.PLAY_IN_ORDER) {
             if (mMainActivity.musicId == 0) {
-                mMainActivity.musicId = mMainActivity.songNum-1;
-                mMainActivity.setMusicView(MainActivity.IsPlay.play);
+                if ( mMainActivity.songNum-1 != -1){
+                    mMainActivity.musicId = mMainActivity.songNum-1;
+                    mMainActivity.setMusicView(MainActivity.IsPlay.play);
+                }
             } else {
                 mMainActivity.musicId = mMainActivity.musicId - 1;
                 mMainActivity.setMusicView(MainActivity.IsPlay.play);
@@ -146,10 +148,10 @@ public class PlayerPresenter implements PlayerControl {
     public void playNext() {
         // 顺序播放
         if (mMainActivity.playPattern == mMainActivity.PLAY_IN_ORDER) {
-
-            mMainActivity.musicId = (mMainActivity.musicId + 1) % mMainActivity.songNum;
-            mMainActivity.setMusicView(MainActivity.IsPlay.play);
-
+            if (mMainActivity.musicId != 0){
+                mMainActivity.musicId = (mMainActivity.musicId + 1) % mMainActivity.songNum;
+                mMainActivity.setMusicView(MainActivity.IsPlay.play);
+            }
         }
         //随机播放
         else if (mMainActivity.playPattern == mMainActivity.PLAY_RANDOM) {

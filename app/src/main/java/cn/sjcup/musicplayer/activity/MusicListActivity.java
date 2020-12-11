@@ -251,18 +251,20 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         mPlayOrPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(playerControl!=null){
+                if ( ! playerControl.IsPlay(PLAY_STATE_STOP)){
+                    if(playerControl!=null){
 
-                    if(playerControl.IsPlay(PLAY_STATE_PLAY)){
+                        if(playerControl.IsPlay(PLAY_STATE_PLAY)){
 
-                        playerControl.playOrPauselist();
-                        mPlayerViewControl.onPlayerStateChange(2);
-                    }
+                            playerControl.playOrPauselist();
+                            mPlayerViewControl.onPlayerStateChange(2);
+                        }
 
-                    else {
+                        else {
 
-                        playerControl.playOrPauselist();
-                        mPlayerViewControl.onPlayerStateChange(1);
+                            playerControl.playOrPauselist();
+                            mPlayerViewControl.onPlayerStateChange(1);
+                        }
                     }
                 }
             }
