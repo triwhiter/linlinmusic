@@ -293,7 +293,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 if (mDrawerLayout != null)
-//                    mDrawerLayout.openDrawer(true);
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
             }
         });
 
