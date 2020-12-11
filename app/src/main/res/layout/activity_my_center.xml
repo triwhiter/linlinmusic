@@ -19,7 +19,7 @@
             android:layout_height="145dp"
             android:orientation="horizontal">
 
-            <cn.sjcup.musicplayer.image.RoundImageView
+            <com.ctgu.linlinmusic.image.RoundImageView
                 android:id="@+id/img_tx"
                 android:layout_width="80dp"
                 android:layout_height="80dp"

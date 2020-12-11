@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="cn.sjcup.musicplayer">
+    package="com.ctgu.linlinmusic">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,15 +16,15 @@
         <activity
             android:theme="@style/AppTheme.Full"
             tools:ignore="DuplicateActivity"
-            android:name=".activity.MusicListActivity"></activity>
-        <activity android:name=".activity.MyCenterActivity"/>
-        <activity android:name=".activity.MyInfoActivity"/>
-        <activity android:name=".activity.ChangePwdActivity" />
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.LoginActivity"/>
-        <activity android:name=".activity.MainActivity"></activity>
+            android:name="com.ctgu.linlinmusic.activity.MusicListActivity"></activity>
+        <activity android:name="com.ctgu.linlinmusic.activity.MyCenterActivity"/>
+        <activity android:name="com.ctgu.linlinmusic.activity.MyInfoActivity"/>
+        <activity android:name="com.ctgu.linlinmusic.activity.ChangePwdActivity" />
+        <activity android:name="com.ctgu.linlinmusic.activity.RegisterActivity" />
+        <activity android:name="com.ctgu.linlinmusic.activity.LoginActivity"/>
+        <activity android:name="com.ctgu.linlinmusic.activity.MainActivity"></activity>
         <activity
-            android:name=".SplashActivity"
+            android:name="com.ctgu.linlinmusic.SplashActivity"
             android:theme="@style/AppTheme.Full"
             tools:ignore="DuplicateActivity">
             <intent-filter>

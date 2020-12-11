@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical">
-            <cn.sjcup.musicplayer.image.RoundImageView
+            <com.ctgu.linlinmusic.image.RoundImageView
                 android:id="@+id/sb_avater"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
