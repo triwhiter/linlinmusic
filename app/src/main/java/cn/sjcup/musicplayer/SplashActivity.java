@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import cn.sjcup.musicplayer.activity.LoginActivity;
 import cn.sjcup.musicplayer.activity.RegisterActivity;
 
@@ -16,6 +19,9 @@ import cn.sjcup.musicplayer.activity.RegisterActivity;
 public class SplashActivity extends AppCompatActivity {
 
     LinearLayout wel;
+    private static final long DELAY = 1000;
+    private TimerTask task;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,17 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.welcome);
         initView();
         initEvent();
+
+        final Intent localIntent=new Intent(this,LoginActivity.class);//你要转向的Activity
+        Timer timer=new Timer();
+        TimerTask tast=new TimerTask() {
+            @Override
+            public void run(){
+                startActivity(localIntent);//执行
+            }
+        };
+        timer.schedule(tast,DELAY);//3秒后
+
     }
 
     private void initEvent(){

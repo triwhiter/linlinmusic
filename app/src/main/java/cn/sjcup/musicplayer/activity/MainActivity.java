@@ -1,8 +1,11 @@
 package cn.sjcup.musicplayer.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,7 +35,7 @@ public class MainActivity extends Activity {
 
     private String account;    //账户
     public static int musicId;   //歌曲id
-    public int playPattern;  //播放模式
+    public static int playPattern=0;  //播放模式
     public static String playAddress;  //音乐文件地址
     public String IMG = RequestServlet.IMG;    //音乐图片的通用地址
     private boolean isUserTouchProgressBar = false;   //判断手是否触摸进度条的状态
@@ -87,6 +90,11 @@ public class MainActivity extends Activity {
         initView(); //初始化界面
 
         initEvent();   //初始化事件
+
+        // 在当前的activity中注册广播
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MusicListActivity.BORADCAST_ACTION_EXIT);//为BroadcastReceiver指定一个action，即要监听的消息名字
+        registerReceiver(mBoradcastReceiver,filter); //动态注册监听  静态的话 在AndroidManifest.xml中定义
 
         //initService();  //初始化服务
     }
@@ -425,5 +433,19 @@ public class MainActivity extends Activity {
 
     private void stop() {
         mPlayerControl.stopPlay();
+    }
+    private BroadcastReceiver mBoradcastReceiver = new BroadcastReceiver(){
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(MusicListActivity.BORADCAST_ACTION_EXIT)){//发来关闭action的广播
+                finish();
+            }
+        }
+    };
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        unregisterReceiver(mBoradcastReceiver); //取消监听
     }
 }

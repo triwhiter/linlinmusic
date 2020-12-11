@@ -1,11 +1,16 @@
 package cn.sjcup.musicplayer.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,7 +47,7 @@ import cn.sjcup.musicplayer.servlet.RequestServlet;
 
 public class MusicListActivity extends AppCompatActivity implements View.OnClickListener{
     private String account;    //账户
-    public static int musicId=0;   //歌曲id
+    public static int musicId = 0;   //歌曲id
     public int playPattern;  //播放模式
     public static JSONArray MusicList;
     public int songNum = 0;  //歌曲总数
@@ -53,6 +58,8 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
     private static TextView mMusicArtist;
     private static SmartImageView mMusicPic;
     private ImageButton mMenu;
+    public final static String BORADCAST_ACTION_EXIT = "exit_app";//关闭活动的广播action名称
+
 
     MediaPlayer mediaPlayer;
 
@@ -108,6 +115,11 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
 
         initView(); //初始化界面
         initEvent(); //初始化事件
+
+        // 在当前的activity中注册广播
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BORADCAST_ACTION_EXIT);//为BroadcastReceiver指定一个action，即要监听的消息名字
+        registerReceiver(mBoradcastReceiver,filter); //动态注册监听  静态的话 在AndroidManifest.xml中定义
 
         mediaPlayer = new MediaPlayer();
         mDatas = new ArrayList<>();
@@ -275,7 +287,26 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 if(playerControl!=null){
-                    playerControl.playLast();
+                    if ( !playerControl.IsPlay(PLAY_STATE_STOP) ){
+                        playerControl.playLast();
+                        if (musicId==0)musicId=songNum-1;
+                        else musicId = musicId-1;
+                        try {
+                            JSONObject musicInfo = RequestServlet.getMusicList().getJSONObject(musicId);
+                            String name = musicInfo.optString("name");
+                            String author = musicInfo.optString("author");
+                            String img = musicInfo.optString("img");
+                            mMusicPic.setImageUrl(RequestServlet.IMG+img,R.mipmap.ic_launcher,R.mipmap.ic_launcher);
+                            mMusicName.setText(name);
+                            mMusicArtist.setText(author);
+                            mPlayerViewControl.onPlayerStateChange(1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+
                 }
             }
         });
@@ -285,7 +316,27 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 if(playerControl!=null){
-                    playerControl.playNext();
+                    if ( !playerControl.IsPlay(PLAY_STATE_STOP) ){
+                        playerControl.playNext();
+                        int tid;
+                        if (musicId>=songNum-1)musicId=0;
+                        else musicId = musicId+1;
+                        try {
+                            JSONObject musicInfo = RequestServlet.getMusicList().getJSONObject(musicId);
+                            String name = musicInfo.optString("name");
+                            String author = musicInfo.optString("author");
+                            String img = musicInfo.optString("img");
+                            mMusicPic.setImageUrl(RequestServlet.IMG+img,R.mipmap.ic_launcher,R.mipmap.ic_launcher);
+                            mMusicName.setText(name);
+                            mMusicArtist.setText(author);
+                            mPlayerViewControl.onPlayerStateChange(1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+
                 }
             }
         });
@@ -464,9 +515,38 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
     };
 
     private void stop() {
+
         playerControl.stopPlay();
+
+        onBackPressed();
         //stopService(musicIntent);
     }
+
+    private BroadcastReceiver mBoradcastReceiver = new BroadcastReceiver(){
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(BORADCAST_ACTION_EXIT)){//发来关闭action的广播
+                finish();
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        unregisterReceiver(mBoradcastReceiver); //取消监听
+    }
+    //返回按钮 退出系统
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.setAction(BORADCAST_ACTION_EXIT);
+        sendBroadcast(intent);//发送退出系统广播  每个接收器都会收到 调动finish（）关闭activity
+        finish();
+
+    }
+
 
     @Override
     public void onClick(View view) {
