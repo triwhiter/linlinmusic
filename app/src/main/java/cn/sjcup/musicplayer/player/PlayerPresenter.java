@@ -20,7 +20,7 @@ public class PlayerPresenter implements PlayerControl {
     private String ADDRESS = RequestServlet.ADDRESS;
     private PlayerViewControl mViewController = null;
     private PlayerViewControl listViewController = null;
-    private MainActivity mMainActivity = null;
+    private static MainActivity mMainActivity = null;
     private MusicListActivity musicListActivity =null;
 /*    private MusicListActivity mMusicListActivity = null;*/
 

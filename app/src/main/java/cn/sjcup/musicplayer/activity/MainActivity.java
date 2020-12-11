@@ -31,14 +31,14 @@ import cn.sjcup.musicplayer.servlet.RequestServlet;
 public class MainActivity extends Activity {
 
     private String account;    //账户
-    public int musicId;   //歌曲id
+    public static int musicId;   //歌曲id
     public int playPattern;  //播放模式
     public static String playAddress;  //音乐文件地址
     public String IMG = RequestServlet.IMG;    //音乐图片的通用地址
     private boolean isUserTouchProgressBar = false;   //判断手是否触摸进度条的状态
     private Intent musicIntent;
     private PlayerConnection mPlayerConnection;
-    public int songNum = 0;  //歌曲总数
+    public static int songNum = 0;  //歌曲总数
 
     private static SeekBar mSeekBar;  //进度条
     private static Button mPlayOrPause;
