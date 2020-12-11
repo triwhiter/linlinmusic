@@ -2,6 +2,7 @@ package com.ctgu.linlinmusic.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -118,6 +119,13 @@ public class LoginActivity extends Activity {
                         //传递数据
                         Intent intent = new Intent(LoginActivity.this, MusicListActivity.class);
                         intent.putExtra("result",result.toString());   //把用户信息传递到播放界面
+
+                        SharedPreferences userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = ((SharedPreferences) userInfo).edit();//获取Editor
+                        //得到Editor后，写入需要保存的数据
+                        editor.putString("account", userName);
+
+                        editor.commit();//提交修改
 
                         //销毁登录界面
                         LoginActivity.this.finish();

@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -552,6 +553,12 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
                     MusicList = (JSONArray) msg.obj;
                     songNum = MusicList.length();
                     System.out.println("smsmsmms"+songNum);
+                    SharedPreferences userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = ((SharedPreferences) userInfo).edit();//获取Editor
+                    //得到Editor后，写入需要保存的数据
+                    editor.putInt("num", songNum);
+
+                    editor.commit();//提交修改
 
                     //根据用户数据和歌曲列表初始化有关歌曲的界面
 //                    setMusicView(MainActivity.IsPlay.notPlay);
