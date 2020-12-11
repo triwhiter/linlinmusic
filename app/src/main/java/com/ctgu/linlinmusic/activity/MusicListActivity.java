@@ -13,11 +13,13 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ctgu.linlinmusic.R;
-import com.ctgu.linlinmusic.entity.LocalMusicAdapter;
+import com.ctgu.linlinmusic.adapter.LocalMusicAdapter;
 import com.ctgu.linlinmusic.entity.LocalMusicBean;
 import com.ctgu.linlinmusic.image.RoundImageView;
 import com.ctgu.linlinmusic.player.PlayerControl;
@@ -52,8 +54,9 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
     private static TextView mMusicName;
     private static TextView mMusicArtist;
     private static SmartImageView mMusicPic;
-    private ImageButton mMenu;
+    private ImageView mMenu;
     public final static String BORADCAST_ACTION_EXIT = "exit_app";//关闭活动的广播action名称
+    public SearchView searchView;
 
 
     MediaPlayer mediaPlayer;
@@ -209,6 +212,26 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         adapter.notifyDataSetChanged();
     }
 
+    private void searchMusicData(String key) throws JSONException {
+        mDatas.clear();
+
+        for(int i = 0; i < songNum; i++){
+            JSONObject music_json = MusicList.getJSONObject(i);
+            if(music_json.getString("name").indexOf(key)!=-1){
+                String sid = music_json.getString("musicId");
+                String name = music_json.getString("name");
+                String album = music_json.getString("album");
+                String picture = music_json.getString("img");
+                String time = music_json.getString("duration");
+                String author = music_json.getString("author");
+                mDatas.add(new LocalMusicBean(sid,name,author,album,picture,time));
+            }
+
+        }
+        //数据变化，提示更新
+        adapter.notifyDataSetChanged();
+    }
+
 
 
     private void initView() {
@@ -221,6 +244,7 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
         mMusicArtist = (TextView) this.findViewById(R.id.text_view_artist1);
         mMusicPic = (SmartImageView) this.findViewById(R.id.siv_icon1);
         mMenu = this.findViewById(R.id.menu_button);
+        searchView= this.findViewById(R.id.searchView);
 
         Intent intent = getIntent();
         if (intent.getStringExtra("musicIdback") != null){
@@ -342,6 +366,38 @@ public class MusicListActivity extends AppCompatActivity implements View.OnClick
             public void onClick(View view) {
                 if (mDrawerLayout != null)
                     mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // 当点击搜索按钮时触发该方法
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!TextUtils.isEmpty(query)){
+                    try {
+                        searchMusicData(query);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    //mListView.clearTextFilter();
+                }
+                return false;
+            }
+
+            // 当搜索内容改变时触发该方法
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(newText)){
+                    try {
+                        searchMusicData(newText);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    //mListView.clearTextFilter();
+                }
+                return false;
             }
         });
 

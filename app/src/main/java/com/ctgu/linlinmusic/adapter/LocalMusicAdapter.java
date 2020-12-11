@@ -1,4 +1,4 @@
-package com.ctgu.linlinmusic.entity;
+package com.ctgu.linlinmusic.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import com.ctgu.linlinmusic.R;
+import com.ctgu.linlinmusic.entity.LocalMusicBean;
 
 public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.LocalMusicViewHolder> {
     Context context;
